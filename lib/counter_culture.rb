@@ -113,7 +113,7 @@ module CounterCulture
           # iterate over all the possible counter cache column names
           column_names.each do |where, column_name|
             # select join column and count (from above) as well as cache column ('column_name') for later comparison
-            counts_query = query.select("#{klass.table_name}.#{klass.primary_key}, #{klass.table_name}.#{relation_reflect(hash[:relation]).association_primary_key}, #{count_select} AS count, #{klass.table_name}.#{column_name}")
+            counts_query = query.select("#{klass.table_name}.#{klass.primary_key}, #{count_select} AS count, #{klass.table_name}.#{column_name}")
 
             # we need to join together tables until we get back to the table this class itself lives in
             # conditions must also be applied to the join on which we are counting
