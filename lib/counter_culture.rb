@@ -104,7 +104,7 @@ module CounterCulture
               join_table_name = reflect.active_record.table_name
             end
             # join with alias to avoid ambiguous table name with self-referential models:
-            joins_query = "LEFT JOIN #{reflect.active_record.table_name} AS #{join_table_name} ON #{reflect.table_name}.#{reflect.association_primary_key} = #{join_table_name}.#{reflect.foreign_key}"
+            joins_query = "LEFT JOIN #{reflect.active_record.table_name} #{join_table_name} ON #{reflect.table_name}.#{reflect.association_primary_key} = #{join_table_name}.#{reflect.foreign_key}"
             # adds 'type' condition to JOIN clause if the current model is a child in a Single Table Inheritance
             joins_query = "#{joins_query} AND #{reflect.active_record.table_name}.type IN ('#{self.name}')" if reflect.active_record.column_names.include?('type') and not(self.descends_from_active_record?)
             joins_query
