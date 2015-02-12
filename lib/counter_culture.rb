@@ -127,7 +127,9 @@ module CounterCulture
             start = 0
             batch_size = options[:batch_size] || 1000
 
-            while (records = counts_query.reorder(full_primary_key(klass) + " ASC").offset(start).limit(batch_size).group(full_primary_key(klass)).to_a).any?
+            group_column_names = column_names.map { |where, column_name| "#{klass.table_name}.#{column_name}" }
+
+            while (records = counts_query.reorder(full_primary_key(klass) + " ASC").offset(start).limit(batch_size).group([full_primary_key(klass)] + group_column_names).to_a).any?
               # now iterate over all the models and see whether their counts are right
               records.each do |model|
                 count = model.read_attribute('count') || 0
